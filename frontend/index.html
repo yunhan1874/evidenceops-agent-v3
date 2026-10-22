@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="EvidenceOps Agent 企业知识库演示控制台：证据门禁、运行轨迹与人工审批。"
+    />
+    <title>EvidenceOps Agent Console</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div>
+            <p class="eyebrow">ENTERPRISE RAG CONTROL PLANE</p>
+            <h1>EvidenceOps <span>Agent</span></h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="mode-chip" title="默认使用开发身份与 Mock RAGFlow">
+            <span class="pulse-dot"></span>
+            Demo Mode
+          </div>
+          <label class="dev-user-field">
+            <span>开发用户</span>
+            <input id="dev-user" value="github-demo" aria-label="开发用户" />
+          </label>
+          <button id="sample-button" class="button ghost" type="button">查看界面示例</button>
+          <button id="refresh-button" class="icon-button" type="button" aria-label="刷新会话" title="刷新会话">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 12a8 8 0 1 1-2.34-5.66L20 8.68M20 4v4.68h-4.68" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sessions-panel panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Workspace</p>
+              <h2>知识会话</h2>
+            </div>
+            <button id="new-session-button" class="icon-button accent" type="button" aria-label="新建会话" title="新建会话">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            </button>
+          </div>
+
+          <div id="session-list" class="session-list" aria-live="polite">
+            <div class="empty-list">
+              <span class="empty-icon">◎</span>
+              <p>启动后端后刷新会话，或先查看界面示例。</p>
+            </div>
+          </div>
+
+          <div class="system-card">
+            <div class="system-card-title">
+              <span class="pulse-dot"></span>
+              <strong>演示环境</strong>
+            </div>
+            <p>Mock RAGFlow · Dev Auth</p>
+            <div class="system-row"><span>API</span><code id="api-origin">same-origin</code></div>
+            <div class="system-row"><span>版本</span><code>v3.1 Harness</code></div>
+          </div>
+        </aside>
+
+        <section class="conversation-panel panel">
+          <div class="conversation-header">
+            <div>
+              <div class="session-title-row">
+                <h2 id="active-session-title">EvidenceOps 演示台</h2>
+                <span id="active-status" class="status-pill neutral">未连接</span>
+              </div>
+              <p id="active-session-meta">证据可信度驱动的企业知识 Agent</p>
+            </div>
+            <button id="delete-session-button" class="icon-button danger hidden" type="button" aria-label="删除会话" title="软删除当前会话">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5" /></svg>
+            </button>
+          </div>
+
+          <div id="message-stream" class="message-stream" aria-live="polite">
+            <article class="welcome-card">
+              <div class="welcome-badge">WHY THIS IS NOT ANOTHER CHATBOT</div>
+              <h3>每个答案都要先通过证据门禁。</h3>
+              <p>
+                RAGFlow 只负责生成候选答案；Evidence Guard 根据引用、相关度、来源覆盖和安全风险决定
+                正常回答、警告、拒答或阻断。每次判断都会留下 Evidence Passport 与 Harness 轨迹。
+              </p>
+              <div class="capability-grid">
+                <div><strong>4</strong><span>Verdict 等级</span></div>
+                <div><strong>5</strong><span>Tool Contracts</span></div>
+                <div><strong>200</strong><span>分层评测样本</span></div>
+              </div>
+            </article>
+          </div>
+
+          <div id="approval-card" class="approval-card hidden" aria-live="assertive">
+            <div class="approval-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.4 8.3-8 9-4.6-.7-8-4-8-9V7l8-4zM9 12l2 2 4-5" /></svg>
+            </div>
+            <div class="approval-body">
+              <p class="section-kicker">HUMAN IN THE LOOP</p>
+              <h3>知识库问题反馈等待确认</h3>
+              <div id="approval-draft" class="draft-grid"></div>
+              <label class="approval-comment">
+                <span>审批备注（可选）</span>
+                <input id="approval-comment" placeholder="例如：已核对原制度，确认提交" />
+              </label>
+            </div>
+            <div class="approval-actions">
+              <button id="reject-button" class="button ghost" type="button">拒绝</button>
+              <button id="approve-button" class="button primary" type="button">批准并提交</button>
+            </div>
+          </div>
+
+          <div class="scenario-strip" aria-label="预置演示场景">
+            <span>演练场景</span>
+            <button class="scenario-chip" data-scenario="grounded" type="button">正常问答</button>
+            <button class="scenario-chip" data-scenario="noEvidence" type="button">无引用拒答</button>
+            <button class="scenario-chip" data-scenario="injection" type="button">提示注入阻断</button>
+            <button class="scenario-chip" data-scenario="vagueFeedback" type="button">模糊反馈</button>
+            <button class="scenario-chip" data-scenario="feedback" type="button">反馈审批</button>
+            <button class="scenario-chip" data-scenario="compare" type="button">双文档对比</button>
+          </div>
+
+          <form id="composer" class="composer">
+            <textarea
+              id="query-input"
+              rows="1"
+              maxlength="4000"
+              placeholder="询问制度、比较文档，或指出知识库中的具体问题……"
+              aria-label="输入问题"
+            ></textarea>
+            <div class="composer-footer">
+              <div class="composer-hint">
+                <kbd>Enter</kbd> 发送
+                <span>·</span>
+                <kbd>Shift</kbd> + <kbd>Enter</kbd> 换行
+              </div>
+              <button id="send-button" class="send-button" type="submit">
+                <span>运行 Agent</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <aside class="inspector-panel panel">
+          <div class="inspector-header">
+            <div>
+              <p class="section-kicker">OBSERVABILITY</p>
+              <h2>运行检查器</h2>
+            </div>
+            <span id="inspector-run-status" class="status-pill neutral">暂无 Run</span>
+          </div>
+
+          <div class="tab-list" role="tablist" aria-label="运行详情">
+            <button class="tab active" data-tab="evidence" role="tab" type="button">证据</button>
+            <button class="tab" data-tab="trace" role="tab" type="button">轨迹</button>
+            <button class="tab" data-tab="tools" role="tab" type="button">工具</button>
+          </div>
+
+          <div id="inspector-content" class="inspector-content">
+            <div class="inspector-empty">
+              <div class="radar" aria-hidden="true"><span></span></div>
+              <h3>等待一次 Agent 运行</h3>
+              <p>运行后可在这里检查 Evidence Passport、Harness Timeline 和 Tool Calls。</p>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  api:
+    build: .
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://agent:change-me@postgres:5432/agent}
+      CHECKPOINT_DATABASE_URL: ${CHECKPOINT_DATABASE_URL:-postgresql://agent:change-me@postgres:5432/agent?sslmode=disable}
+      DEV_AUTH_ENABLED: ${DEV_AUTH_ENABLED:-true}
+      RAG_MOCK_MODE: ${RAG_MOCK_MODE:-true}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_ROUTER_MODEL: ${LLM_ROUTER_MODEL:-}
+      LLM_PRIMARY_MODEL: ${LLM_PRIMARY_MODEL:-}
+      LLM_HIGH_RISK_MODEL: ${LLM_HIGH_RISK_MODEL:-}
+      LLM_SHADOW_MODEL: ${LLM_SHADOW_MODEL:-}
+      TOOL_EGRESS_ALLOWLIST: ${TOOL_EGRESS_ALLOWLIST:-ragflow,localhost,127.0.0.1}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/ready', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    volumes:
+      - ./data:/app/data:ro
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: agent
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent -d agent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - agent_pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  agent_pgdata:

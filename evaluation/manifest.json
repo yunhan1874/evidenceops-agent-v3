@@ -1,0 +1,23 @@
+{
+  "schema_version": "evaluation-case/v2",
+  "dataset_version": "2026-08-05.v2",
+  "total_cases": 200,
+  "suites": {
+    "gold": {
+      "path": "gold.jsonl",
+      "count": 90,
+      "sha256": "1cb29f0a0fbf591620ff8f44e71c7b88b94886d0c3d70ced8b0eba52aa29a884"
+    },
+    "adversarial": {
+      "path": "adversarial.jsonl",
+      "count": 70,
+      "sha256": "248a1cec191e9526440f5082e05e1fa7c5fae1f1de00687c8fc01d5481160e6d"
+    },
+    "replay_seed": {
+      "path": "replay_seed.jsonl",
+      "count": 40,
+      "sha256": "c90a0b884f65b8c4f70deb93cdaad41a7d4f5f2ef344e5a6bb539b63db8d1e6b"
+    }
+  },
+  "replay_status": "replay_seed.jsonl is a synthetic, PII-free seed. Replace or extend it with sanitized production traces before claiming online replay coverage."
+}

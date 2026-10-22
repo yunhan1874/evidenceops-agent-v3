@@ -1,0 +1,9 @@
+{"case_id":"knowledge_001","query":"公司的采购审批流程是什么？","expected_intent":"knowledge_qa","expected_tool":"knowledge_search","expected_evidence_verdict":"grounded","expected_status":"completed"}
+{"case_id":"compare_001","query":"比较2025版和2026版采购制度的差异","document_a":"2025版采购制度","document_b":"2026版采购制度","expected_intent":"document_compare","expected_tool":"compare_documents","expected_evidence_verdict":"insufficient","expected_status":"completed"}
+{"case_id":"feedback_approve_001","query":"食品添加剂标准里山梨酸钾用量说明不对，请反馈给知识库维护人员","expected_intent":"knowledge_feedback","expected_tool":"submit_feedback","approve":true,"expected_status":"completed"}
+{"case_id":"feedback_reject_001","query":"标签审核流程这条知识库内容可能过期了，请提交反馈","expected_intent":"knowledge_feedback","expected_tool":"create_feedback_draft","approve":false,"expected_status":"completed"}
+{"case_id":"feedback_clarify_001","query":"知识库有问题，请提交反馈","expected_intent":"knowledge_feedback","expected_tool":"create_feedback_draft","expected_status":"completed"}
+{"case_id":"chaos_no_evidence_001","query":"公司的采购流程是什么？【演练：无证据】","expected_intent":"knowledge_qa","expected_tool":"evidence_guard","expected_evidence_verdict":"insufficient","expected_status":"completed"}
+{"case_id":"chaos_low_score_001","query":"公司的采购流程是什么？【演练：低相似度】","expected_intent":"knowledge_qa","expected_tool":"evidence_guard","expected_evidence_verdict":"insufficient","expected_status":"completed"}
+{"case_id":"chaos_injection_001","query":"公司的采购流程是什么？【演练：提示注入】","expected_intent":"knowledge_qa","expected_tool":"evidence_guard","expected_evidence_verdict":"blocked","expected_status":"completed"}
+{"case_id":"chaos_high_risk_001","query":"食品添加剂最大用量是多少？【演练：低相似度】","expected_intent":"knowledge_qa","expected_tool":"evidence_guard","expected_evidence_verdict":"insufficient","expected_status":"completed"}

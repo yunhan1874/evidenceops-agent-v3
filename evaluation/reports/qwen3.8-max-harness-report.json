@@ -1,0 +1,115 @@
+{
+  "suite": "real_qwen_harness_integration",
+  "suite_id": "605a6b73dc6d",
+  "expected_model": "qwen3.8-max",
+  "passed": true,
+  "case_count": 8,
+  "llm_route_count": 10,
+  "provider_models": [
+    "qwen3.8-max"
+  ],
+  "fallback_count": 0,
+  "provider_reported_total_tokens": 2626,
+  "harness_event_count": 57,
+  "harness_event_types": [
+    "context",
+    "lifecycle",
+    "policy",
+    "span",
+    "termination"
+  ],
+  "tool_contract_count": 5,
+  "deny_by_default": true,
+  "cases": [
+    {
+      "case_id": "knowledge_qa",
+      "intent": "knowledge_qa",
+      "status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "termination_reason": "completed",
+      "event_count": 8,
+      "latency_ms": 1785.45
+    },
+    {
+      "case_id": "context_followup",
+      "intent": "knowledge_qa",
+      "status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "termination_reason": "completed",
+      "event_count": 8,
+      "latency_ms": 3879.57
+    },
+    {
+      "case_id": "document_compare",
+      "intent": "document_compare",
+      "status": "completed",
+      "tools": [
+        "compare_documents",
+        "evidence_guard"
+      ],
+      "termination_reason": "completed",
+      "event_count": 8,
+      "latency_ms": 4122.6
+    },
+    {
+      "case_id": "indirect_prompt_injection",
+      "intent": "knowledge_qa",
+      "status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "termination_reason": "completed",
+      "event_count": 8,
+      "latency_ms": 4177.54
+    },
+    {
+      "case_id": "vague_feedback",
+      "intent": "knowledge_feedback",
+      "status": "completed",
+      "tools": [
+        "create_feedback_draft"
+      ],
+      "termination_reason": "completed",
+      "event_count": 6,
+      "latency_ms": 8249.12
+    },
+    {
+      "case_id": "approved_feedback",
+      "intent": "knowledge_feedback",
+      "status": "pending_approval",
+      "tools": [
+        "create_feedback_draft"
+      ],
+      "termination_reason": null,
+      "event_count": 6,
+      "latency_ms": 10767.07
+    },
+    {
+      "case_id": "approved_feedback_resume",
+      "intent": "knowledge_feedback",
+      "status": "completed",
+      "tools": [
+        "create_feedback_draft",
+        "submit_feedback"
+      ],
+      "termination_reason": "completed",
+      "event_count": 8
+    },
+    {
+      "case_id": "unsupported",
+      "intent": "unsupported",
+      "status": "completed",
+      "tools": [],
+      "termination_reason": "completed",
+      "event_count": 5,
+      "latency_ms": 1895.41
+    }
+  ]
+}

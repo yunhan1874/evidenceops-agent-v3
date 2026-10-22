@@ -1,0 +1,202 @@
+{
+  "dataset_case_count": 9,
+  "metrics": {
+    "intent_accuracy": {
+      "passed": 9,
+      "total": 9,
+      "rate": 1.0
+    },
+    "task_completion_rate": {
+      "passed": 9,
+      "total": 9,
+      "rate": 1.0
+    },
+    "tool_selection_accuracy": {
+      "passed": 9,
+      "total": 9,
+      "rate": 1.0
+    },
+    "workflow_accuracy": {
+      "passed": 9,
+      "total": 9,
+      "rate": 1.0
+    },
+    "evidence_verdict_accuracy": {
+      "passed": 6,
+      "total": 6,
+      "rate": 1.0
+    },
+    "case_pass_rate": {
+      "passed": 9,
+      "total": 9,
+      "rate": 1.0
+    }
+  },
+  "by_layer": {
+    "smoke": {
+      "passed": 9,
+      "total": 9,
+      "rate": 1.0
+    }
+  },
+  "by_tag": {},
+  "latency_ms": {
+    "mean": 6101.59,
+    "p50": 4386.27,
+    "p95": 12086.81,
+    "max": 12086.81
+  },
+  "details": [
+    {
+      "case_id": "knowledge_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 3623.65,
+      "intent": "knowledge_qa",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "evidence_verdict": "grounded",
+      "transport_error": null
+    },
+    {
+      "case_id": "compare_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 4386.27,
+      "intent": "document_compare",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "compare_documents",
+        "evidence_guard"
+      ],
+      "evidence_verdict": "insufficient",
+      "transport_error": null
+    },
+    {
+      "case_id": "feedback_approve_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 9614.57,
+      "intent": "knowledge_feedback",
+      "initial_status": "pending_approval",
+      "final_status": "completed",
+      "tools": [
+        "create_feedback_draft",
+        "submit_feedback"
+      ],
+      "evidence_verdict": null,
+      "transport_error": null
+    },
+    {
+      "case_id": "feedback_reject_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 9859.95,
+      "intent": "knowledge_feedback",
+      "initial_status": "pending_approval",
+      "final_status": "completed",
+      "tools": [
+        "create_feedback_draft"
+      ],
+      "evidence_verdict": null,
+      "transport_error": null
+    },
+    {
+      "case_id": "feedback_clarify_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 12086.81,
+      "intent": "knowledge_feedback",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "create_feedback_draft"
+      ],
+      "evidence_verdict": null,
+      "transport_error": null
+    },
+    {
+      "case_id": "chaos_no_evidence_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 3066.11,
+      "intent": "knowledge_qa",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "evidence_verdict": "insufficient",
+      "transport_error": null
+    },
+    {
+      "case_id": "chaos_low_score_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 3593.4,
+      "intent": "knowledge_qa",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "evidence_verdict": "insufficient",
+      "transport_error": null
+    },
+    {
+      "case_id": "chaos_injection_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 4094.07,
+      "intent": "knowledge_qa",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "evidence_verdict": "blocked",
+      "transport_error": null
+    },
+    {
+      "case_id": "chaos_high_risk_001",
+      "layer": "smoke",
+      "tags": [],
+      "passed": true,
+      "failures": [],
+      "latency_ms": 4589.44,
+      "intent": "knowledge_qa",
+      "initial_status": "completed",
+      "final_status": "completed",
+      "tools": [
+        "knowledge_search",
+        "evidence_guard"
+      ],
+      "evidence_verdict": "insufficient",
+      "transport_error": null
+    }
+  ]
+}
